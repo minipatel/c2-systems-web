@@ -38,6 +38,18 @@
 								</ul>
 							
 							</section>
+							
+							<section>
+
+								<ul>
+									<#list alltags as tag>
+									
+									<li>${tag}</a></li>
+
+									</#list>
+								</ul>
+							
+							</section>
 
 
 
