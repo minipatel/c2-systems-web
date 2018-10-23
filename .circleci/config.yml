@@ -1,3 +1,4 @@
+version: 2
 machine:
   pre:
     - git config --global user.name "CircleCI"
@@ -7,18 +8,22 @@ dependencies:
   pre:
     - curl -s "https://get.sdkman.io" | bash
     - sdk install jbake 2.6.3
-
+jobs:
+  deploy-job:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "93:a4:01:6d:54:4f:b5:23:5e:6a:e9:1c:10:36:c9:d5"
+  deployment:
+      master:
+        branch: master
+        commands:
+          - rm -rf docs/*
+          - jbake -b . ./docs
+          - git add docs
+          - git commit --message "Baked site on $(date) [ci skip]"
+          - git push origin master
 test:
   override:
     - sdk version
-    - sdk current jbake
-
-deployment:
-  master:
-    branch: master
-    commands:
-      - rm -rf docs/*
-      - jbake -b . ./docs
-      - git add docs
-      - git commit --message "Generated site on $(date) [ci skip]"
-      - git push origin master
+    - sdk current jbake         
