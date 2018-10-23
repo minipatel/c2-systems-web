@@ -14,15 +14,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "93:a4:01:6d:54:4f:b5:23:5e:6a:e9:1c:10:36:c9:d5"
-  deployment:
-      master:
-        branch: master
-        commands:
-          - rm -rf docs/*
-          - jbake -b . ./docs
-          - git add docs
-          - git commit --message "Baked site on $(date) [ci skip]"
-          - git push origin master
+      - rm -rf docs/*
+      - jbake -b . ./docs
+      - git add docs
+      - git commit --message "Baked site on $(date) [ci skip]"
+      - git push origin master
 test:
   override:
     - sdk version
