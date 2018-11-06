@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JBake</title>
+    <link>http://jbake.org</link>
+    <atom:link href="http://jbake.org/feed.xml" rel="self" type="application/rss+xml" />
+    <description>JBake Bootstrap Template</description>
+    <language>en-gb</language>
+    <pubDate>ti, 6 nov. 2018 19:55:13 +0100</pubDate>
+    <lastBuildDate>ti, 6 nov. 2018 19:55:13 +0100</lastBuildDate>
+
+    <item>
+      <title>Apache Kafka Quick Start</title>
+      <link>http://jbake.org/blog/2013/first-post.html</link>
+      <pubDate>ti, 6 nov. 2018 00:00:00 +0100</pubDate>
+      <guid isPermaLink="false">blog/2013/first-post.html</guid>
+      	<description>
+	
+&lt;p&gt;So you want to get up and running with Kafka to test out some event streams?
+If you are on a 64-bit Windows 10 machine you may be aware that you now have the option of running Windows Subsystem for Linux (WSL).&lt;/p&gt;
+
+&lt;p&gt;This means you can fire up the Windows PowerShell and run bash within your normal Windows session.&lt;/p&gt;
+
+&lt;p&gt;Firstly go to Settings &amp;gt; System &amp;gt; About to see the version number of your Win 10 installation.
+It needs to be 1607 or above.&lt;/p&gt;
+
+&lt;p&gt;To enable WSL open the PowerShell as Administrator and run the command:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;After installation and a reboot open the PowerShell as Admin again and run &lt;code&gt;bash&lt;/code&gt;.
+Follow instructions to finish installation of Ubuntu version of WSL.&lt;/p&gt;
+
+&lt;p&gt;When this is done and you run bash you should be automatically logged in as root (prompt ends in a #).&lt;/p&gt;
+
+&lt;p&gt;Now that you have a Linux environment we will first install the JDK:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# sudo apt-get install oracle-java8-installer&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# sudo apt install oracle-java8-set-default&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Verify with:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# java -version&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;With Java in place download and install Apache ZooKeeper.
+Go to &lt;a href=&quot;http://mirrors.dotsrc.org/apache/zookeeper&quot;&gt;ZooKeeper mirror site&lt;/a&gt; and find you download link.&lt;/p&gt;
+
+&lt;p&gt;Then in bash download the tar:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# wget http://mirrors.dotsrc.org/apache/zookeeper/zookeeper-3.4.11/zookeeper-3.4.11.tar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;untar:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# tar -zxf zookeeper-3.4.11.tar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;move files to /usr/local/zookeeper:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# mv zookeeper-3.4.11 /usr/local/zookeeper&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;create /var/lib/zookeeper:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# mkdir -p /var/lib/zookeeper&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;set configs:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cat &amp;gt; /usr/local/zookeeper/conf/zoo.cfg &amp;lt;&amp;lt; EOF
+tickTime=2000
+dataDir=/var/lib/zookeeper
+clientPort=2181
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(after you have typed EOF in the last line the config values are piped to the zoo.cfg file and you are back in normal bash mode …)&lt;/p&gt;
+
+&lt;p&gt;Now do (depending on where your jdk resides):&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;You should now be able to run ZooKeeper with:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/zookeeper/bin/zkServer.sh start&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;and stop ZooKeeper again with [ctrl+c] or:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/zookeeper/bin/zkServer.sh stop&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;When ZooKeeper is running try the command &lt;code&gt;srvr&lt;/code&gt; to verify that ZooKeeper responds.&lt;/p&gt;
+
+&lt;p&gt;Finally we are ready to download and install Kafka in much the same way as ZooKeeper:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# wget http://mirrors.dotsrc.org/apache/kafka/1.0.0/kafka_2.11-1.0.0.tgz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# tar -zxf kafka_2.11-1.0.0.tgz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# mv kafka_2.11-1.0.0 /usr/local/kafka&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# mkdir /tmp/kafka-logs&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Then start Kafka (make sure ZooKeeper is running first):&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/server.properties&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;You can now add topics:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic wordcount-input&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic wordcount-output&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;List topics:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Pipe a text file to the wordcount-input topic:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic wordcount-input &amp;lt; /home/cod/wordcount.txt&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Build and run &lt;a href=&quot;https://github.com/jsteffensen/kafka-streams-wordcount&quot;&gt;the sample app&lt;/a&gt; in another bash terminal.
+The sample app takes messages from the topic wordcount-input and produces new messages to wordcount-output:&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint&quot;&gt;
+&lt;code&gt;
+public static void main(String[] args) throws Exception{
+
+        Properties props = new Properties();
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, &quot;wordcount&quot;);
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, &quot;localhost:9092&quot;);
+        props.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        props.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, &quot;earliest&quot;);
+
+        KStreamBuilder builder = new KStreamBuilder();
+        KStream&lt;String, String&gt; source = builder.stream(&quot;wordcount-input&quot;);
+
+        final Pattern pattern = Pattern.compile(&quot;\\W+&quot;);
+        KStream counts  = source.flatMapValues(value-&gt; Arrays.asList(pattern.split(value.toLowerCase())))
+                .map((key, value) -&gt; new KeyValue&lt;Object, Object&gt;(value, value))
+                .filter((key, value) -&gt; (!value.equals(&quot;the&quot;)))
+                .groupByKey()
+                .count(&quot;CountStore&quot;).mapValues(value-&gt;Long.toString(value)).toStream();
+        counts.to(&quot;wordcount-output&quot;);
+
+        KafkaStreams streams = new KafkaStreams(builder, props);
+
+        streams.cleanUp();
+        streams.start();
+
+        // usually the stream application would be running forever,
+        // in this example we just let it run for some time and stop since the input data is finite.
+        Thread.sleep(5000L);
+
+        streams.close();
+
+    }
+&lt;/code&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Consume messages in a topic. For instance see the messages the sample app produced:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;# /usr/local/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wordcount-output --from-beginning --property print.key=true&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;(the topic wordcount-output will be empty until you have run the sample app)&lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>Fourth Post</title>
+      <link>http://jbake.org/blog/2013/fourth-post.html</link>
+      <pubDate>to, 17 okt. 2013 00:00:00 +0200</pubDate>
+      <guid isPermaLink="false">blog/2013/fourth-post.html</guid>
+      	<description>
+	&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel diam purus. Curabitur ut nisi lacus.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;http://example.org&quot; class=&quot;bare&quot;&gt;http://example.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;http://example.org&quot;&gt;Example.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Nam id nisl quam. Donec a lorem sit amet libero pretium vulputate vel ut purus. Suspendisse leo arcu,
+mattis et imperdiet luctus, pulvinar vitae mi. Quisque fermentum sollicitudin feugiat. Mauris nec leo
+ligula. Vestibulum tristique odio ut risus ultricies a hendrerit quam iaculis. Duis tempor elit sit amet
+ligula vehicula et iaculis sem placerat. Fusce dictum, metus at volutpat lacinia, elit massa auctor risus,
+id auctor arcu enim eu augue. Donec ultrices turpis in mi imperdiet ac venenatis sapien sodales. In
+consequat imperdiet nunc quis bibendum. Nulla semper, erat quis ornare tristique, lectus massa posuere
+libero, ut vehicula lectus nunc ut lorem. Aliquam erat volutpat.&lt;/p&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>Third Post</title>
+      <link>http://jbake.org/blog/foo/third-post.html</link>
+      <pubDate>to, 26 sep. 2013 00:00:00 +0200</pubDate>
+      <guid isPermaLink="false">blog/foo/third-post.html</guid>
+      	<description>
+	&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel diam purus. Curabitur ut nisi lacus.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;http://example.org&quot; class=&quot;bare&quot;&gt;http://example.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;http://example.org&quot;&gt;Example.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Nam id nisl quam. Donec a lorem sit amet libero pretium vulputate vel ut purus. Suspendisse leo arcu,
+mattis et imperdiet luctus, pulvinar vitae mi. Quisque fermentum sollicitudin feugiat. Mauris nec leo
+ligula. Vestibulum tristique odio ut risus ultricies a hendrerit quam iaculis. Duis tempor elit sit amet
+ligula vehicula et iaculis sem placerat. Fusce dictum, metus at volutpat lacinia, elit massa auctor risus,
+id auctor arcu enim eu augue. Donec ultrices turpis in mi imperdiet ac venenatis sapien sodales. In
+consequat imperdiet nunc quis bibendum. Nulla semper, erat quis ornare tristique, lectus massa posuere
+libero, ut vehicula lectus nunc ut lorem. Aliquam erat volutpat.&lt;/p&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>Second Post</title>
+      <link>http://jbake.org/blog/2013/second-post.html</link>
+      <pubDate>sø, 25 aug. 2013 00:00:00 +0200</pubDate>
+      <guid isPermaLink="false">blog/2013/second-post.html</guid>
+      	<description>
+	&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vel diam purus. Curabitur ut nisi lacus.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://example.org&quot;&gt;http://example.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://example.org&quot;&gt;Example.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nam id nisl quam. Donec a lorem sit amet libero pretium vulputate vel ut purus. Suspendisse leo arcu,&lt;br /&gt;
+mattis et imperdiet luctus, pulvinar vitae mi. Quisque fermentum sollicitudin feugiat. Mauris nec leo&lt;br /&gt;
+ligula. Vestibulum tristique odio ut risus ultricies a hendrerit quam iaculis. Duis tempor elit sit amet&lt;br /&gt;
+ligula vehicula et iaculis sem placerat. Fusce dictum, metus at volutpat lacinia, elit massa auctor risus,&lt;br /&gt;
+id auctor arcu enim eu augue. Donec ultrices turpis in mi imperdiet ac venenatis sapien sodales. In&lt;br /&gt;
+consequat imperdiet nunc quis bibendum. Nulla semper, erat quis ornare tristique, lectus massa posuere&lt;br /&gt;
+libero, ut vehicula lectus nunc ut lorem. Aliquam erat volutpat.&lt;/p&gt;
+
+	</description>
+    </item>
+
+  </channel> 
+</rss>
