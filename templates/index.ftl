@@ -14,7 +14,7 @@
 							<header>
 								<h2>Command & Control (c2)<br />
 								causeries on systems and technology</h2>
-								<p>A technical tour of the challenges<br />
+								<p>A technical tour of challenges<br />
 								and solutions</p>
 							</header>
 							<ul class="actions">
