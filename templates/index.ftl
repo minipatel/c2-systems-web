@@ -14,11 +14,11 @@
 							<header>
 								<h2>Command & Control (c2)<br />
 								causeries on systems and technology</h2>
-								<p>Morbi in sem quis dui plac viva<br />
-								erat ornare consequat</p>
+								<p>A technical tour of the challenges<br />
+								and solutions</p>
 							</header>
 							<ul class="actions">
-								<li><a href="#" class="button icon icon-after fa-chevron-right">Read More</a></li>
+								<li><a href="preamble.html" class="button icon icon-after fa-chevron-right">Read More</a></li>
 							</ul>
 						</div>
 					</section>
@@ -27,10 +27,10 @@
 					<section id="one" class="wrapper style1 split">
 						<div class="container">
 							<div class="primary">
-								<h2>Vultricies nulla</h2>
+								<h2>About</h2>
 								<p>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis et auctor ultrices ut, elementum vulputate Pellentesque fermentum dolor. Aliquam quam lectus, facilisis aucto vulputate consequat pellentesque mauris ut lectus. Nunc tellus ante lorem ipsum dolor. Phasellus lacinia, magna a ullamcorper.</p>
 								<ul class="actions">
-									<li><a href="#" class="button">Acticeno</a></li>
+									<li><a href="about.html" class="button">Read more</a></li>
 								</ul>
 							</div>
 							<div class="secondary">
