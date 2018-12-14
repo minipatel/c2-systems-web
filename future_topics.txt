@@ -11,3 +11,8 @@ The "time space continuum" between the problem and solution domain
 - People in NATO and industry and their time/space distance to current C2
 - Kessel Run
 - Systematics
+
+Hang loose
+- Systems that are too specific towards a business process and too constrained will become obsolete much faster.
+- Systemantics loose systems.
+. e.g. the success of jchat
